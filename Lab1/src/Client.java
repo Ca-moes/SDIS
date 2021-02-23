@@ -9,11 +9,11 @@ public class Client {
             return;
         }
 
-        System.out.println(args[0]); //host
-        System.out.println(args[1]); //port
-        System.out.println(args[2]); //oper   - "register" / "lookup"
-        System.out.println(args[3]); //opnd*  - "<DNS name> [<IP address>] for register | <DNS name> for lookup"
-        System.out.println(args[4]); //opnd2* - <IP address> for register
+        // System.out.println(args[0]); //host
+        // System.out.println(args[1]); //port
+        // System.out.println(args[2]); //oper   - "register" / "lookup"
+        // System.out.println(args[3]); //opnd*  - "<DNS name> [<IP address>] for register | <DNS name> for lookup"
+        if ((args.length == 5)) System.out.println(args[4]); //opnd2* - <IP address> for register
 
         DatagramSocket socket = new DatagramSocket(3001);
         String command = "invalid";
@@ -31,5 +31,11 @@ public class Client {
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, Integer.parseInt(args[1]));
         socket.send(packet);
 
+        buf = new byte[256];
+        packet = new DatagramPacket(buf, buf.length);
+        socket.receive(packet);
+
+        System.out.println("Client: " + command + " : " + new String(buf));
+        return;
     }
 }
