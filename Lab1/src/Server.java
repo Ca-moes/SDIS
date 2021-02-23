@@ -1,8 +1,8 @@
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.net.*;
 
+// cls && javac Server.java && java Server 3000
 public class Server {
     public static HashMap<String, InetAddress> records;
 
@@ -15,30 +15,31 @@ public class Server {
         });
 
         DatagramSocket socket = new DatagramSocket(Integer.parseInt(args[0]));
-        byte[] buf = new byte[256];
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
+        byte[] buf;
 
-        System.out.println("Server: " + clean(new String(buf)));
+        while(true){
+            buf = new byte[256];
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            socket.receive(packet);
 
-        switch (new String(buf).split(" ")[0]){ // type of request
-            case "lookup":
-                buf = lookup(clean(new String(buf))).getBytes();
-                break;
-            case "register":
-                buf = register(clean(new String(buf))).getBytes();
-                break;
+            System.out.println("Server: " + clean(new String(buf)));
+
+            switch (new String(buf).split(" ")[0]){ // type of request
+                case "lookup":
+                    buf = lookup(clean(new String(buf))).getBytes();
+                    break;
+                case "register":
+                    buf = register(clean(new String(buf))).getBytes();
+                    break;
+            }
+
+            // Resposta
+            InetAddress returnAddress = packet.getAddress();
+            int returnPort = packet.getPort();
+            packet = new DatagramPacket(buf, buf.length, returnAddress, returnPort);
+            socket.send(packet);
         }
 
-        // Resposta
-        InetAddress returnAddress = packet.getAddress();
-        int returnPort = packet.getPort();
-        packet = new DatagramPacket(buf, buf.length, returnAddress, returnPort);
-        socket.send(packet);
-
-        records.forEach((key,value)->{
-            System.out.println(key + " - " + value);
-        });
     }
 
     public static HashMap<String, InetAddress> initialRecords() throws UnknownHostException {
@@ -58,7 +59,6 @@ public class Server {
     public static String lookup(String name){
         String[] results = name.split(" ");
         InetAddress address = records.get(results[1]);
-        System.out.println(address);
         return address != null ? address.toString() : "ERROR";
     }
 
