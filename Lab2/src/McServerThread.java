@@ -37,6 +37,6 @@ public class McServerThread extends Thread{
         };
 
         Timer temporizador = new Timer();
-        temporizador.schedule(task, 0, 1000);
+        temporizador.schedule(task, 30000, 1000);
     }
 }

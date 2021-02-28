@@ -21,7 +21,7 @@ public class Client2 {
 
         // Received port and address, time to send request
 
-        DatagramSocket socket = new DatagramSocket(3001);
+        DatagramSocket socket = new DatagramSocket();
         String command = "invalid";
 
         if (args[2].equals("register")){
