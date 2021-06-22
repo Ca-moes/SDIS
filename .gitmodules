@@ -1,0 +1,6 @@
+[submodule "SDIS_Proj1"]
+	path = SDIS_Proj1
+	url = https://github.com/Ca-moes/SDIS_Proj1
+[submodule "SDIS_Proj2"]
+	path = SDIS_Proj2
+	url = https://github.com/Ca-moes/SDIS_Proj2
