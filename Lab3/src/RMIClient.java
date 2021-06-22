@@ -10,7 +10,8 @@ public class RMIClient {
         try {
             Registry registry = LocateRegistry.getRegistry();
             Methods stub = (Methods) registry.lookup("Methods");
-            // String response = stub.sayHello();
+            
+            String response = stub.sayHello();
             System.out.println("response: " + response);
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e.toString());

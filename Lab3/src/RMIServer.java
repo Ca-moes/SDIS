@@ -26,8 +26,13 @@ public class RMIServer implements Methods{
         }
     }
 
-
     @Override
+    public String sayHello() {
+        return "Hello";
+    }
+
+
+    /*@Override
     public String register(String name) {
         String[] results = name.split(" ");
         InetAddress address = records.get(results[1]);
@@ -45,5 +50,7 @@ public class RMIServer implements Methods{
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
+
+
 }
